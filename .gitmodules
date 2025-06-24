@@ -2,3 +2,6 @@
 	path = notebooks
 	url = https://github.com/bani2016up/sae_single_repo.git
 	branch = notebooks-branch
+[submodule ".sae_upstream"]
+	path = .sae_upstream
+	url = https://github.com/bani2016up/sae_single_repo.git
