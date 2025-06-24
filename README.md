@@ -1,20 +1,30 @@
-# PastProof AI — ML Module of the Automated Fact‑Checking System
-
-> **PastProof AI** is the machine‑learning core of the PastProof fact‑checking service.
-> The module takes **raw text** as input and returns **only those claims it determines to be false**, each accompanied by the evidence passage that refutes it and an optional natural‑language explanation.
+<h1 align="center">PastProof AI — ML Module of the Automated Fact‑Checking System</h1>
+<div align="center">
+	<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/D1ffic00lt/ai-pastproof">
+	<img alt="GitHub code size" src="https://img.shields.io/github/languages/code-size/D1ffic00lt/ai-pastproof">
+	<img alt="GitHub commits stats" src="https://img.shields.io/github/commit-activity/y/D1ffic00lt/ai-pastproof">
+</div>
+<p align="center">
+<strong>PastProof</strong> AI is the machine‑learning core of the PastProof fact‑checking service.
+</p>
+<p align="center">
+The module takes <strong>raw text</strong> as input and returns <strong>only those claims it determines to be 
+false</strong>, 
+each accompanied by the evidence passage that refutes it and an optional natural‑language explanation.
+</p>
 
 ---
 
 ## Pipeline at a Glance
 
-| Step                            | Purpose                                                                        | Key dependencies                 |
-| ------------------------------- | ------------------------------------------------------------------------------ | -------------------------------- |
-| 1. Pre‑processing               | Cleaning, normalisation, sentence splitting, optional coreference resolution   | `spaCy`                          |
-| 2. Semantic Retrieval           | *k*‑NN search for candidate evidence paragraphs (FAISS + SentenceTransformers) | `faiss`, `sentence-transformers` |
-| 3. Heuristic Filtering          | Rule‑based filters (dates, NER, length) to prune irrelevant matches            | `spaCy`, `regex`                 |
-| 4. Cross‑Encoder Classification | DeBERTa / RoBERTa cross‑encoder scores each (claim, evidence) pair             | `sentence-transformers`          |
-| 5. Explanation LLM (optional)   | Generates a concise rationale for why the claim is false                       | `transformers`                   |
-| 6. Aggregation                  | Collects only the `REFUTED` items and emits them via `SuggestionResponse`      | —                                |
+| Step                            | Purpose                                                                      | Key dependencies                 |
+| ------------------------------- | ---------------------------------------------------------------------------- | -------------------------------- |
+| 1. Pre‑processing               | Cleaning, normalisation, sentence splitting, optional coreference resolution | `spaCy`                          |
+| 2. Semantic Retrieval           | k‑NN search for candidate evidence paragraphs (FAISS + SentenceTransformers) | `faiss`, `sentence-transformers` |
+| 3. Heuristic Filtering          | Rule‑based filters (dates, NER, length) to prune irrelevant matches          | `spaCy`, `regex`                 |
+| 4. Cross‑Encoder Classification | DeBERTa / RoBERTa cross‑encoder scores each (claim, evidence) pair           | `sentence-transformers`          |
+| 5. Explanation LLM (optional)   | Generates a concise rationale for why the claim is false                     | `transformers`                   |
+| 6. Aggregation                  | Collects only the `REFUTED` items and emits them via `SuggestionResponse`    | —                                |
 
 `ai_services/response.py` defines the `SuggestionResponse` dataclass that standardises the API output, and
 `ai_services/sentence.py` contains utilities for robust sentence segmentation that are reused across the pipeline.
